@@ -1,5 +1,8 @@
 const catchError = require('../utils/catchError');
 const User = require('../models/User');
+const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken")
+
 
 const getAll = catchError(async(req, res) => {
     const results = await User.findAll();
@@ -11,13 +14,6 @@ const create = catchError(async(req, res) => {
     return res.status(201).json(result);
 });
 
-const getOne = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await User.findByPk(id);
-    if(!result) return res.sendStatus(404);
-    return res.json(result);
-});
-
 const remove = catchError(async(req, res) => {
     const { id } = req.params;
     const result = await User.destroy({ where: {id} });
@@ -27,9 +23,8 @@ const remove = catchError(async(req, res) => {
 
 const update = catchError(async (req, res) => {
 
-    const dataRemuve = ['password', 'email'];
-    dataRemuve.forEach((data) => delete req.body[data]);
-  
+    const dataRemove = ['password', 'email'];
+    dataRemove.forEach((data) => delete req.body[data]);
   
     const { id } = req.params;
   

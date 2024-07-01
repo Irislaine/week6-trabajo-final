@@ -23,7 +23,7 @@ const User = sequelize.define('user', {
     phone: {
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
 });
 
 //Hook de sequalize aplicada en un modelo!
