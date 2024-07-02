@@ -34,7 +34,7 @@ const remove = catchError(async (req, res) => {
     const result = await ProductImg.findByPk(id)
     if (!result) return res.sendStatus(404)
   
-    console.log(__dirname);
+    console.log(__dirname); // me da nada mas y nada menos que la ruta absoluta al directorio que contiene el archivo en ejecución 
     // ..
     //public
     //uploads
@@ -47,7 +47,6 @@ const remove = catchError(async (req, res) => {
     fs.unlinkSync(imageFilePath)
   
     await result.destroy()
-  
     return res.sendStatus(204);
   });
   
