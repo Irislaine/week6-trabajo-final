@@ -12,7 +12,7 @@ const ProductImg = sequelize.define('productImg', {
   },
   //productId
 }, {
-  timestamps: false
+  timestamps: false //desativamos los timestamps - cuando creamos o actualizamos una imagen.
 });
 
 module.exports = ProductImg;

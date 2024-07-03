@@ -1,10 +1,10 @@
 const catchError = require('../utils/catchError');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
-
+const ProductImg = require('../models/ProductImg');
 
 const getAll = catchError(async (req, res) => {
-  const results = await Product.findAll({ include: [Category] });
+  const results = await Product.findAll({ include: [Category, ProductImg] });
   return res.json(results);
 });
 
@@ -36,11 +36,24 @@ const update = catchError(async (req, res) => {
   return res.json(result[1][0]);
 });
 
+const setImages = catchError(async (req, res) => {
+  const { id } = req.params // -> :id/images
+  const product = await Product.findByPk(id)
+  if(!product) return res.sendStatus(404)
+
+  await product.setProductImgs(req.body) // seteamos la imagen del producto que se encuentra en esa posicion del array,
+  const  images = await product.getProductImgs() // con la propiedad obtenemos a la image que seteamos,
+
+  return res.status(200).json(images) //y con el formato json yo muestro las images que he seteado.
+})
+
+
 
 module.exports = {
   getAll,
   create,
   getOne,
   remove,
-  update
+  update,
+  setImages
 }
